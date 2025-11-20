@@ -4,6 +4,8 @@
 
 package com.app.canes;
 
+import com.app.canes.view.Login;
+
 /**
  *
  * @author Carlos Borges
@@ -11,6 +13,13 @@ package com.app.canes;
 public class Canes {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        javax.swing.SwingUtilities.invokeLater(() -> {         
+        Login view = new Login();
+        view.setLocationRelativeTo(null);
+        view.setVisible(true);
+        view.setTitle("LOGIN");
+        
+        
+        });
     }
 }
