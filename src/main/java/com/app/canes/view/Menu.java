@@ -171,7 +171,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnEnviar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar1ActionPerformed
 
-         Produto view = new Produto();
+         ProdutoView view = new ProdutoView();
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("PRODUTO");
@@ -180,7 +180,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviar1ActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-         Cliente view = new Cliente();
+         ClienteView view = new ClienteView();
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("CLIENTE");
@@ -189,7 +189,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnEnviar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar3ActionPerformed
-         Usuario view = new Usuario();
+         UsuarioView view = new UsuarioView();
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("USUÁRIO");

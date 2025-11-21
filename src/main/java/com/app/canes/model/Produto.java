@@ -9,7 +9,7 @@ package com.app.canes.model;
  * @author Carlos Borges
  */
 public class Produto {
-    private int id;
+    private Integer id;
     private int codigo;
     private String nome;
     private int estoque;
@@ -19,7 +19,7 @@ public class Produto {
 
 }
 
-    public Produto(int id, int codigo, String nome, int estoque, Double valor) {
+    public Produto(Integer id, int codigo, String nome, int estoque, Double valor) {
         this.id = id;
         this.codigo = codigo;
         this.nome = nome;
@@ -27,11 +27,11 @@ public class Produto {
         this.valor = valor;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

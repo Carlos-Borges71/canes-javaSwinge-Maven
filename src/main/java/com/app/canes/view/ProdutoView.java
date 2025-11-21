@@ -4,23 +4,30 @@
  */
 package com.app.canes.view;
 
+import com.app.canes.dao.ProdutoDAO;
+import com.app.canes.model.Cliente;
+import com.app.canes.model.Produto;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
  * @author Carlos Borges
  */
-public class Produto extends javax.swing.JFrame {
+public class ProdutoView extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Produto.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProdutoView.class.getName());
 
     /**
      * Creates new form menu
      */
-    public Produto() {
+    public ProdutoView() {
 
         System.out.println(getClass().getResource("/img/Vector.png"));
 
@@ -42,9 +49,45 @@ public class Produto extends javax.swing.JFrame {
 
         lblImagem.setBounds(20, 20, 206, 161); // posicione
         this.add(lblImagem);
+        
+        carregarTabelaProdutos();
 
     }
 
+    ProdutoDAO produtoDAO = new ProdutoDAO();
+    
+    private void carregarTabelaProdutos() {
+
+        JTableHeader header = tblProdutos.getTableHeader();
+        header.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        header.setOpaque(false);
+        header.setBackground(new Color(32, 136, 203));
+        header.setForeground(Color.WHITE);
+
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "ID", "Código", "Produto", "Valor", "Quantidade"
+                }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // impede edição na tabela
+            }
+        };
+
+        tblProdutos.setModel(model);
+
+        for (Produto p : produtoDAO.findAll()) {
+            model.addRow(new Object[]{
+              p.getId(),
+                p.getCodigo(),
+                p.getNome(),
+                p.getValor(),
+                p.getEstoque()
+            });
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,7 +104,7 @@ public class Produto extends javax.swing.JFrame {
         btnEnviar5 = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProdutos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,7 +160,7 @@ public class Produto extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -128,7 +171,8 @@ public class Produto extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblProdutos.setRowHeight(25);
+        jScrollPane1.setViewportView(tblProdutos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,7 +270,7 @@ public class Produto extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Produto().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ProdutoView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -237,6 +281,6 @@ public class Produto extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblProdutos;
     // End of variables declaration//GEN-END:variables
 }

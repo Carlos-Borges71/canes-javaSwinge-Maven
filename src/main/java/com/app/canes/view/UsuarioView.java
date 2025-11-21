@@ -4,23 +4,31 @@
  */
 package com.app.canes.view;
 
+import com.app.canes.dao.UsuarioDAO;
+import com.app.canes.model.Usuario;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
  * @author Carlos Borges
  */
-public class Usuario extends javax.swing.JFrame {
+public class UsuarioView extends javax.swing.JFrame {
+
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Usuario.class.getName());
 
     /**
      * Creates new form menu
      */
-    public Usuario() {
+    public UsuarioView() {
 
         System.out.println(getClass().getResource("/img/Vector.png"));
 
@@ -36,6 +44,7 @@ public class Usuario extends javax.swing.JFrame {
         setContentPane(fundo);  // depois aplica o fundo
 
         initComponents();
+
         this.setLayout(null);
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/canes-.png"));
         JLabel lblImagem = new JLabel(icon);
@@ -43,6 +52,44 @@ public class Usuario extends javax.swing.JFrame {
         lblImagem.setBounds(20, 20, 206, 161); // posicione
         this.add(lblImagem);
 
+        carregarTabelaUsuarios();
+
+    }
+
+    private void carregarTabelaUsuarios() {
+
+        JTableHeader header = tblUsuarios.getTableHeader();
+        header.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        header.setOpaque(false);
+        header.setBackground(new Color(32, 136, 203));
+        header.setForeground(Color.WHITE);
+
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "ID", "Nome", "Setor", "Data", "Telefone", "Logradouro", "Cidade", "Estado"
+                }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // impede edição na tabela
+            }
+        };
+
+        tblUsuarios.setModel(model);
+
+        for (Usuario u : usuarioDAO.findAll()) {
+            model.addRow(new Object[]{
+                u.getId(),
+                u.getNome(),
+                u.getSetor(),
+                u.getData(),
+                u.getTelefone().getNumero(),
+                u.getEndereco().getLogradouro(),
+                u.getEndereco().getCidade(),
+                u.getEndereco().getEstado()
+            });
+        }
     }
 
     /**
@@ -61,7 +108,7 @@ public class Usuario extends javax.swing.JFrame {
         btnEnviar5 = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblUsuarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,7 +164,7 @@ public class Usuario extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -128,7 +175,8 @@ public class Usuario extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblUsuarios.setRowHeight(25);
+        jScrollPane1.setViewportView(tblUsuarios);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,7 +231,7 @@ public class Usuario extends javax.swing.JFrame {
 
     private void btnEnviar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar4ActionPerformed
 
-         UsuarioCadastro view = new UsuarioCadastro();
+        UsuarioCadastro view = new UsuarioCadastro();
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("CADASTRO");
@@ -195,7 +243,7 @@ public class Usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviar5ActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-         Menu view = new Menu();
+        Menu view = new Menu();
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("LOGIN");
@@ -225,7 +273,7 @@ public class Usuario extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Usuario().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new UsuarioView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -236,6 +284,6 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblUsuarios;
     // End of variables declaration//GEN-END:variables
 }

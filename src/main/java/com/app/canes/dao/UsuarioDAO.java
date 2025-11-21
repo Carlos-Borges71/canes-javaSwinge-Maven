@@ -1,0 +1,74 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.app.canes.dao;
+
+import com.app.canes.model.Endereco;
+import com.app.canes.model.Telefone;
+import com.app.canes.model.Usuario;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+
+/**
+ *
+ * @author Carlos Borges
+ */
+public class UsuarioDAO {
+
+    private final Map<Integer, Usuario> map = new LinkedHashMap<>();
+    private final AtomicLong seq = new AtomicLong(1);
+
+   
+    public UsuarioDAO() {
+        
+        
+        // Seed inicial baseado no seu Figma/PDF
+       save(new Usuario(
+        null,
+        "Administração",
+        "Carlos Borges",
+        "carlos",
+        new Date(),
+        "123456",
+        new Telefone(1, "99999-1111"),
+        new Endereco(1, "Rua das Flores", "123", "Centro", "São Paulo", "SP", "23000-000")));
+
+
+       save(new Usuario(
+    null,
+    "Financeiro",
+    "Maria Silva",
+    "maria",
+    new Date(),
+    "abc123",
+    new Telefone(2, "98888-2222"),
+    new Endereco(2, "Av. Brasil", "456", "Copacabana", "Rio de Janeiro", "RJ", "22000-000")
+));
+
+    }
+
+    public List<Usuario> findAll() {
+        return new ArrayList<>(map.values());
+    }
+
+    public Usuario findById(Long id) {
+        return map.get(id);
+    }
+
+    public Usuario save(Usuario u) {
+        if (u.getId() == null) {
+            u.setId((int) seq.getAndIncrement());
+        }
+        map.put(u.getId(), u);
+        return u;
+    }
+
+    public void delete(Long id) {
+        map.remove(id);
+    }
+}

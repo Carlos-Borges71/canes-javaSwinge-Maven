@@ -4,24 +4,31 @@
  */
 package com.app.canes.view;
 
+import com.app.canes.dao.ClienteDAO;
+import com.app.canes.model.Cliente;
+import com.app.canes.model.Usuario;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
  * @author Carlos Borges
  */
-public class Cliente extends javax.swing.JFrame {
+public class ClienteView extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Cliente.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ClienteView.class.getName());
 
     /**
      * Creates new form menu
      */
-    public Cliente() {
+    public ClienteView() {
 
         System.out.println(getClass().getResource("/img/Vector.png"));
 
@@ -43,7 +50,46 @@ public class Cliente extends javax.swing.JFrame {
 
         lblImagem.setBounds(20, 20, 206, 161); // posicione
         this.add(lblImagem);
+        
+        carregarTabelaClientes();
 
+    }
+    
+    ClienteDAO clienteDAO = new ClienteDAO();
+    
+    private void carregarTabelaClientes() {
+
+        JTableHeader header = tblClientes.getTableHeader();
+        header.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        header.setOpaque(false);
+        header.setBackground(new Color(32, 136, 203));
+        header.setForeground(Color.WHITE);
+
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "ID", "Nome", "Data", "Telefone", "Logradouro", "Cidade", "Estado"
+                }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // impede edição na tabela
+            }
+        };
+
+        tblClientes.setModel(model);
+
+        for (Cliente c : clienteDAO.findAll()) {
+            model.addRow(new Object[]{
+               c.getId(),
+                c.getNome(),
+                c.getData(),
+                c.getTelefone().getNumero(),
+                c.getEndereco().getLogradouro(),
+                c.getEndereco().getCidade(),
+                c.getEndereco().getEstado()
+            });
+        }
     }
 
     /**
@@ -62,7 +108,7 @@ public class Cliente extends javax.swing.JFrame {
         btnEnviar5 = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblClientes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(918, 650));
@@ -119,7 +165,7 @@ public class Cliente extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -130,7 +176,8 @@ public class Cliente extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblClientes.setRowHeight(25);
+        jScrollPane1.setViewportView(tblClientes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,7 +276,7 @@ public class Cliente extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Cliente().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ClienteView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -240,6 +287,6 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblClientes;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,25 +11,29 @@ import java.util.Date;
  * @author Carlos Borges
  */
 public class Cliente {
-    private int id;
+    private Integer id;
     private String nome;
     private Date data;
+    private Telefone telefone;
+    private Endereco endereco;
     
     public Cliente(){
         
     }
 
-    public Cliente(int id, String nome, Date data) {
+    public Cliente(Integer id, String nome, Date data, Telefone telefone, Endereco endereco) {
         this.id = id;
         this.nome = nome;
         this.data = data;
+        this.telefone = telefone;
+        this.endereco = endereco;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -49,6 +53,15 @@ public class Cliente {
         this.data = data;
     }
 
+    public Telefone getTelefone() {
+        return telefone;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 5;
