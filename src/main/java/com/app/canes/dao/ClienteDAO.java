@@ -34,7 +34,7 @@ public class ClienteDAO {
         return new ArrayList<>(map.values());
     }
 
-    public Cliente findById(Long id) {
+    public Cliente findById(Integer id) {
         return map.get(id);
     }
 
@@ -48,7 +48,7 @@ public class ClienteDAO {
         }
    
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         map.remove(id);
     }
 }

@@ -56,7 +56,7 @@ public class UsuarioDAO {
         return new ArrayList<>(map.values());
     }
 
-    public Usuario findById(Long id) {
+    public Usuario findById(Integer id) {
         return map.get(id);
     }
 
@@ -68,7 +68,7 @@ public class UsuarioDAO {
         return u;
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         map.remove(id);
     }
 }

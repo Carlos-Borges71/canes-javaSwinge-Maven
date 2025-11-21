@@ -17,11 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ProdutoDAO {
     
-    private int id;
-    private int codigo;
-    private String nome;
-    private int estoque;
-    private Double valor;
+   
     
        private final Map<Integer, Produto> map = new LinkedHashMap<>();
     private final AtomicLong seq = new AtomicLong(1);
@@ -36,7 +32,7 @@ public class ProdutoDAO {
         return new ArrayList<>(map.values());
     }
 
-    public Produto findById(Long id) {
+    public Produto findById(Integer id) {
         return map.get(id);
     }
 
@@ -48,7 +44,7 @@ public class ProdutoDAO {
         return p;
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         map.remove(id);
     }
 }

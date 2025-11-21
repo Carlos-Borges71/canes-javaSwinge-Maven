@@ -9,8 +9,10 @@ import com.app.canes.model.Usuario;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -55,6 +57,7 @@ public class UsuarioView extends javax.swing.JFrame {
         carregarTabelaUsuarios();
 
     }
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     private void carregarTabelaUsuarios() {
 
@@ -83,7 +86,7 @@ public class UsuarioView extends javax.swing.JFrame {
                 u.getId(),
                 u.getNome(),
                 u.getSetor(),
-                u.getData(),
+                sdf.format(u.getData()),
                 u.getTelefone().getNumero(),
                 u.getEndereco().getLogradouro(),
                 u.getEndereco().getCidade(),
@@ -226,6 +229,22 @@ public class UsuarioView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar3ActionPerformed
+
+                int row = tblUsuarios.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um usuário!");
+            return;
+        }
+
+// O ID está na coluna 0 da tabela
+        Integer id = (Integer) tblUsuarios.getModel().getValueAt(row, 0);
+
+// Deleta usando o DAO
+        usuarioDAO.delete(id);
+
+// Recarrega a tabela
+        carregarTabelaUsuarios();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEnviar3ActionPerformed
 

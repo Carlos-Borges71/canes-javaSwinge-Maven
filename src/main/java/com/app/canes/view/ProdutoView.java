@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -222,6 +223,23 @@ public class ProdutoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar3ActionPerformed
+
+          int row = tblProdutos.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto!");
+            return;
+        }
+
+// O ID está na coluna 0 da tabela
+        Integer id = (Integer) tblProdutos.getModel().getValueAt(row, 0);
+
+// Deleta usando o DAO
+        produtoDAO.delete(id);
+
+// Recarrega a tabela
+        carregarTabelaProdutos();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEnviar3ActionPerformed
 

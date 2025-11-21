@@ -10,6 +10,7 @@ import com.app.canes.model.Usuario;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -50,13 +51,13 @@ public class ClienteView extends javax.swing.JFrame {
 
         lblImagem.setBounds(20, 20, 206, 161); // posicione
         this.add(lblImagem);
-        
+
         carregarTabelaClientes();
 
     }
-    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     ClienteDAO clienteDAO = new ClienteDAO();
-    
+
     private void carregarTabelaClientes() {
 
         JTableHeader header = tblClientes.getTableHeader();
@@ -81,9 +82,9 @@ public class ClienteView extends javax.swing.JFrame {
 
         for (Cliente c : clienteDAO.findAll()) {
             model.addRow(new Object[]{
-               c.getId(),
+                c.getId(),
                 c.getNome(),
-                c.getData(),
+                sdf.format(c.getData()),
                 c.getTelefone().getNumero(),
                 c.getEndereco().getLogradouro(),
                 c.getEndereco().getCidade(),
@@ -227,17 +228,33 @@ public class ClienteView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar3ActionPerformed
+
+        int row = tblClientes.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um cliente!");
+            return;
+        }
+
+// O ID está na coluna 0 da tabela
+        Integer id = (Integer) tblClientes.getModel().getValueAt(row, 0);
+
+// Deleta usando o DAO
+        clienteDAO.delete(id);
+
+// Recarrega a tabela
+        carregarTabelaClientes();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEnviar3ActionPerformed
 
     private void btnEnviar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar4ActionPerformed
 
-         ClienteCadastro view = new ClienteCadastro();
+        ClienteCadastro view = new ClienteCadastro();
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("CADASTRO");
-        
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEnviar4ActionPerformed
 
@@ -246,7 +263,7 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviar5ActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-         Menu view = new Menu();
+        Menu view = new Menu();
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("MENU");
