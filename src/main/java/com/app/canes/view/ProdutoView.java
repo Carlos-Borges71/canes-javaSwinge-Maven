@@ -5,7 +5,6 @@
 package com.app.canes.view;
 
 import com.app.canes.dao.ProdutoDAO;
-import com.app.canes.model.Cliente;
 import com.app.canes.model.Produto;
 import java.awt.Color;
 import java.awt.Font;
@@ -30,18 +29,7 @@ public class ProdutoView extends javax.swing.JFrame {
      */
     public ProdutoView() {
 
-        System.out.println(getClass().getResource("/img/Vector.png"));
-
-        JPanel fundo = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon(getClass().getResource("/img/fundo.png"));
-                g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-
-        setContentPane(fundo);  // depois aplica o fundo
+        carregarTela();
 
         initComponents();
         this.setLayout(null);
@@ -50,14 +38,25 @@ public class ProdutoView extends javax.swing.JFrame {
 
         lblImagem.setBounds(20, 20, 206, 161); // posicione
         this.add(lblImagem);
-        
+
         carregarTabelaProdutos();
 
     }
+    ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 
-    ProdutoDAO produtoDAO = new ProdutoDAO();
-    
-    private void carregarTabelaProdutos() {
+    private void carregarTela() {
+        JPanel fundo = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon img = new ImageIcon(getClass().getResource("/img/fundo.png"));
+                g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        setContentPane(fundo);  // depois aplica o fundo
+    }
+
+    public void carregarTabelaProdutos() {
 
         JTableHeader header = tblProdutos.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -73,7 +72,7 @@ public class ProdutoView extends javax.swing.JFrame {
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // impede edição na tabela
+                return true; // impede edição na tabela
             }
         };
 
@@ -81,7 +80,7 @@ public class ProdutoView extends javax.swing.JFrame {
 
         for (Produto p : produtoDAO.findAll()) {
             model.addRow(new Object[]{
-              p.getId(),
+                p.getId(),
                 p.getCodigo(),
                 p.getNome(),
                 p.getValor(),
@@ -89,6 +88,7 @@ public class ProdutoView extends javax.swing.JFrame {
             });
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,9 +100,9 @@ public class ProdutoView extends javax.swing.JFrame {
 
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 1), new java.awt.Dimension(0, 1), new java.awt.Dimension(32767, 1));
         jLabel3 = new javax.swing.JLabel();
-        btnEnviar3 = new javax.swing.JButton();
-        btnEnviar4 = new javax.swing.JButton();
-        btnEnviar5 = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
+        btnCadastrar = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProdutos = new javax.swing.JTable();
@@ -113,39 +113,39 @@ public class ProdutoView extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Produto");
 
-        btnEnviar3.setBackground(new java.awt.Color(224, 38, 38));
-        btnEnviar3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        btnEnviar3.setForeground(new java.awt.Color(255, 255, 255));
-        btnEnviar3.setText("Deletar");
-        btnEnviar3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEnviar3.setVerifyInputWhenFocusTarget(false);
-        btnEnviar3.addActionListener(new java.awt.event.ActionListener() {
+        btnDeletar.setBackground(new java.awt.Color(224, 38, 38));
+        btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        btnDeletar.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeletar.setText("Deletar");
+        btnDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDeletar.setVerifyInputWhenFocusTarget(false);
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviar3ActionPerformed(evt);
+                btnDeletarActionPerformed(evt);
             }
         });
 
-        btnEnviar4.setBackground(new java.awt.Color(50, 48, 48));
-        btnEnviar4.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        btnEnviar4.setForeground(new java.awt.Color(255, 255, 255));
-        btnEnviar4.setText("Cadastrar");
-        btnEnviar4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEnviar4.setVerifyInputWhenFocusTarget(false);
-        btnEnviar4.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastrar.setBackground(new java.awt.Color(50, 48, 48));
+        btnCadastrar.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        btnCadastrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCadastrar.setVerifyInputWhenFocusTarget(false);
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviar4ActionPerformed(evt);
+                btnCadastrarActionPerformed(evt);
             }
         });
 
-        btnEnviar5.setBackground(new java.awt.Color(50, 48, 48));
-        btnEnviar5.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        btnEnviar5.setForeground(new java.awt.Color(255, 255, 255));
-        btnEnviar5.setText("Atualizar");
-        btnEnviar5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEnviar5.setVerifyInputWhenFocusTarget(false);
-        btnEnviar5.addActionListener(new java.awt.event.ActionListener() {
+        btnAtualizar.setBackground(new java.awt.Color(50, 48, 48));
+        btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        btnAtualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAtualizar.setVerifyInputWhenFocusTarget(false);
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviar5ActionPerformed(evt);
+                btnAtualizarActionPerformed(evt);
             }
         });
 
@@ -186,11 +186,11 @@ public class ProdutoView extends javax.swing.JFrame {
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(467, 467, 467))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnEnviar4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
-                        .addComponent(btnEnviar5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(btnEnviar3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(111, 111, 111))
@@ -212,19 +212,19 @@ public class ProdutoView extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEnviar3)
-                    .addComponent(btnEnviar5)
+                    .addComponent(btnDeletar)
+                    .addComponent(btnAtualizar)
                     .addComponent(btnVoltar)
-                    .addComponent(btnEnviar4))
+                    .addComponent(btnCadastrar))
                 .addGap(33, 33, 33))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEnviar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar3ActionPerformed
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
 
-          int row = tblProdutos.getSelectedRow();
+        int row = tblProdutos.getSelectedRow();
 
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um produto!");
@@ -241,24 +241,101 @@ public class ProdutoView extends javax.swing.JFrame {
         carregarTabelaProdutos();
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEnviar3ActionPerformed
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
-    private void btnEnviar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar4ActionPerformed
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
 
-          ProdutoCadastro view = new ProdutoCadastro();
+        ProdutoCadastro view = new ProdutoCadastro(this);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("CADASTRO");
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEnviar4ActionPerformed
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
-    private void btnEnviar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar5ActionPerformed
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        int row = tblProdutos.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione uma linha para atualizar!",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tblProdutos.getModel();
+
+        // ID é sempre número
+        Integer id = Integer.parseInt(model.getValueAt(row, 0).toString());
+
+        Produto p = produtoDAO.findById(id);
+
+        if (p == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro: Produto não encontrado!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // ✔ Nome (String)
+        p.setNome(model.getValueAt(row, 2).toString());
+
+        // ✔ Código (int)
+        try {
+            p.setCodigo(Integer.parseInt(model.getValueAt(row, 1).toString()));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Código inválido! Digite apenas números.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // ✔ Valor (double)
+        try {
+            p.setValor(Double.parseDouble(model.getValueAt(row, 3).toString()));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Valor inválido! Use formato 99.99",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // ✔ Estoque (int)
+        try {
+            p.setEstoque(Integer.parseInt(model.getValueAt(row, 4).toString()));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Estoque inválido! Digite apenas números.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // Salvar no DAO
+        produtoDAO.save(p);
+
+        JOptionPane.showMessageDialog(this,
+                "Produto atualizado com sucesso!",
+                "Sucesso",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        carregarTabelaProdutos();
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEnviar5ActionPerformed
+    }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-         Menu view = new Menu();
+        Menu view = new Menu();
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("MENU");
@@ -292,9 +369,9 @@ public class ProdutoView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEnviar3;
-    private javax.swing.JButton btnEnviar4;
-    private javax.swing.JButton btnEnviar5;
+    private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel3;

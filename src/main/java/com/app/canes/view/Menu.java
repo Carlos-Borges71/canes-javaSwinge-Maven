@@ -23,18 +23,7 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
 
-        System.out.println(getClass().getResource("/img/Vector.png"));
-
-        JPanel fundo = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon(getClass().getResource("/img/fundo.png"));
-                g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-
-        setContentPane(fundo);  // depois aplica o fundo
+        carregarTela();
 
         initComponents();
         this.setLayout(null);
@@ -44,6 +33,17 @@ public class Menu extends javax.swing.JFrame {
         lblImagem.setBounds(20, 20, 315, 245); // posicione
         this.add(lblImagem);
 
+    }
+     private void carregarTela() {
+        JPanel fundo = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon img = new ImageIcon(getClass().getResource("/img/fundo.png"));
+                g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        setContentPane(fundo);  // depois aplica o fundo
     }
 
     /**

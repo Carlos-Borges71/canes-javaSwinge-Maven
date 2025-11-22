@@ -19,6 +19,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Carlos Borges
  */
 public class UsuarioDAO {
+    
+    private static UsuarioDAO instance;
 
     private final Map<Integer, Usuario> map = new LinkedHashMap<>();
     private final AtomicLong seq = new AtomicLong(1);
@@ -52,6 +54,13 @@ public class UsuarioDAO {
 
     }
 
+    public static UsuarioDAO getInstance() {
+        if (instance == null) {
+            instance = new UsuarioDAO();
+        }
+        return instance;
+    }
+    
     public List<Usuario> findAll() {
         return new ArrayList<>(map.values());
     }

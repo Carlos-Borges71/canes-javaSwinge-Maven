@@ -9,10 +9,10 @@ import com.app.canes.model.Endereco;
 import com.app.canes.model.Telefone;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -20,14 +20,22 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ClienteDAO {
     
-    private final Map<Integer, Cliente> map = new LinkedHashMap<>();
-    private final AtomicLong seq = new AtomicLong(1);
+   private static ClienteDAO instance;
+    private Map<Integer, Cliente> map = new HashMap<>();
+    private AtomicInteger seq = new AtomicInteger(1);
 
     public ClienteDAO() {
         // Cliente inicial
         save(new Cliente(null, "Empresa X", new Date(),
                  new Telefone(2, "99999-1111"),
     new Endereco(3, "Rua das Flores", "123", "Centro", "São Paulo", "SP", "23000-000")));
+    }
+    
+    public static ClienteDAO getInstance() {
+        if (instance == null) {
+            instance = new ClienteDAO();
+        }
+        return instance;
     }
 
     public List<Cliente> findAll() {
@@ -44,6 +52,7 @@ public class ClienteDAO {
         }
         map.put(c.getId(), c);
         return c;
+        
             
         }
    

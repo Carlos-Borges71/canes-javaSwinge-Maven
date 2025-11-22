@@ -23,7 +23,7 @@ import javax.swing.table.JTableHeader;
  */
 public class UsuarioView extends javax.swing.JFrame {
 
-    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Usuario.class.getName());
 
@@ -32,18 +32,7 @@ public class UsuarioView extends javax.swing.JFrame {
      */
     public UsuarioView() {
 
-        System.out.println(getClass().getResource("/img/Vector.png"));
-
-        JPanel fundo = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon(getClass().getResource("/img/fundo.png"));
-                g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-
-        setContentPane(fundo);  // depois aplica o fundo
+        carregarTela();
 
         initComponents();
 
@@ -59,7 +48,19 @@ public class UsuarioView extends javax.swing.JFrame {
     }
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    private void carregarTabelaUsuarios() {
+    private void carregarTela() {
+        JPanel fundo = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon img = new ImageIcon(getClass().getResource("/img/fundo.png"));
+                g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        setContentPane(fundo);  // depois aplica o fundo
+    }
+
+    public void carregarTabelaUsuarios() {
 
         JTableHeader header = tblUsuarios.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -75,7 +76,7 @@ public class UsuarioView extends javax.swing.JFrame {
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // impede edição na tabela
+                return true; // impede edição na tabela
             }
         };
 
@@ -229,8 +230,7 @@ public class UsuarioView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar3ActionPerformed
-
-                int row = tblUsuarios.getSelectedRow();
+        int row = tblUsuarios.getSelectedRow();
 
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um usuário!");
@@ -245,12 +245,13 @@ public class UsuarioView extends javax.swing.JFrame {
 
 // Recarrega a tabela
         carregarTabelaUsuarios();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEnviar3ActionPerformed
 
     private void btnEnviar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar4ActionPerformed
 
-        UsuarioCadastro view = new UsuarioCadastro();
+        UsuarioCadastro view = new UsuarioCadastro(this);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("CADASTRO");
@@ -258,6 +259,64 @@ public class UsuarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviar4ActionPerformed
 
     private void btnEnviar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar5ActionPerformed
+
+        int row = tblUsuarios.getSelectedRow();
+
+        // Nenhuma linha selecionada → MOSTRA MENSAGEM e PARA AQUI
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione uma linha para atualizar!",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;  // OBRIGATÓRIO → impede continuar
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
+
+        // Pega o ID do cliente
+        Integer id = (Integer) model.getValueAt(row, 0);
+
+        Usuario u = usuarioDAO.findById(id);
+
+        if (u == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro: Cliente não encontrado!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // Atualiza os dados
+        try {
+            u.setData(sdf.parse((String) model.getValueAt(row, 3)));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Data inválida! Use dd/MM/yyyy.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        u.setNome((String) model.getValueAt(row, 1));
+        u.setSetor((String) model.getValueAt(row, 2));
+        u.getTelefone().setNumero((String) model.getValueAt(row, 4));
+        u.getEndereco().setLogradouro((String) model.getValueAt(row, 5));
+        u.getEndereco().setCidade((String) model.getValueAt(row, 6));
+        u.getEndereco().setEstado((String) model.getValueAt(row, 7));
+
+        usuarioDAO.save(u);
+
+        JOptionPane.showMessageDialog(this,
+                "Cliente atualizado com sucesso!",
+                "Sucesso",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        carregarTabelaUsuarios();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEnviar5ActionPerformed
 

@@ -9,19 +9,19 @@ package com.app.canes.model;
  * @author Carlos Borges
  */
 public class Telefone {
-    private int id;
+    private Integer id;
     private String numero;
     
     public Telefone(){
         
     }
 
-    public Telefone(int id, String numero) {
+    public Telefone(Integer id, String numero) {
         this.id = id;
         this.numero = numero;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

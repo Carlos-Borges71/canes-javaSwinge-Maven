@@ -12,8 +12,8 @@ import java.util.Date;
  */
 public class Usuario {
     private Integer id;
-    private String setor;
     private String nome;
+    private String setor;    
     private String login;
     private Date data;
     private String senha;
@@ -23,7 +23,7 @@ public class Usuario {
     public Usuario(){        
     }
 
-    public Usuario(Integer id, String setor, String nome, String login, Date data, String senha, Telefone telefone, Endereco endereco) {
+    public Usuario(Integer id,  String nome, String setor,String login, Date data, String senha, Telefone telefone, Endereco endereco) {
         this.id = id;
         this.setor = setor;
         this.nome = nome;

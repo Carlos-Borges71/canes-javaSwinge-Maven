@@ -6,7 +6,6 @@ package com.app.canes.view;
 
 import com.app.canes.dao.ClienteDAO;
 import com.app.canes.model.Cliente;
-import com.app.canes.model.Usuario;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -31,18 +30,7 @@ public class ClienteView extends javax.swing.JFrame {
      */
     public ClienteView() {
 
-        System.out.println(getClass().getResource("/img/Vector.png"));
-
-        JPanel fundo = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon(getClass().getResource("/img/fundo.png"));
-                g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-
-        setContentPane(fundo);  // depois aplica o fundo
+        carregarTela();
 
         initComponents();
         this.setLayout(null);
@@ -56,9 +44,22 @@ public class ClienteView extends javax.swing.JFrame {
 
     }
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    ClienteDAO clienteDAO = new ClienteDAO();
 
-    private void carregarTabelaClientes() {
+    ClienteDAO clienteDAO = ClienteDAO.getInstance();
+
+    private void carregarTela() {
+        JPanel fundo = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon img = new ImageIcon(getClass().getResource("/img/fundo.png"));
+                g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        setContentPane(fundo);  // depois aplica o fundo
+    }
+
+    public void carregarTabelaClientes() {
 
         JTableHeader header = tblClientes.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -74,7 +75,7 @@ public class ClienteView extends javax.swing.JFrame {
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // impede edição na tabela
+                return true; // impede edição na tabela
             }
         };
 
@@ -104,7 +105,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 1), new java.awt.Dimension(0, 1), new java.awt.Dimension(32767, 1));
         jLabel3 = new javax.swing.JLabel();
-        btnEnviar3 = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
         btnEnviar4 = new javax.swing.JButton();
         btnEnviar5 = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
@@ -118,15 +119,15 @@ public class ClienteView extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Cliente");
 
-        btnEnviar3.setBackground(new java.awt.Color(224, 38, 38));
-        btnEnviar3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        btnEnviar3.setForeground(new java.awt.Color(255, 255, 255));
-        btnEnviar3.setText("Deletar");
-        btnEnviar3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEnviar3.setVerifyInputWhenFocusTarget(false);
-        btnEnviar3.addActionListener(new java.awt.event.ActionListener() {
+        btnDeletar.setBackground(new java.awt.Color(224, 38, 38));
+        btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        btnDeletar.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeletar.setText("Deletar");
+        btnDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDeletar.setVerifyInputWhenFocusTarget(false);
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviar3ActionPerformed(evt);
+                btnDeletarActionPerformed(evt);
             }
         });
 
@@ -195,7 +196,7 @@ public class ClienteView extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addComponent(btnEnviar5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(btnEnviar3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(111, 111, 111))
@@ -217,7 +218,7 @@ public class ClienteView extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEnviar3)
+                    .addComponent(btnDeletar)
                     .addComponent(btnEnviar5)
                     .addComponent(btnVoltar)
                     .addComponent(btnEnviar4))
@@ -227,30 +228,31 @@ public class ClienteView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEnviar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar3ActionPerformed
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
 
         int row = tblClientes.getSelectedRow();
 
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione um cliente!");
-            return;
-        }
+if (row == -1) {
+    JOptionPane.showMessageDialog(this, "Selecione um cliente!");
+    return;
+}
 
 // O ID está na coluna 0 da tabela
-        Integer id = (Integer) tblClientes.getModel().getValueAt(row, 0);
+Integer id = (Integer) tblClientes.getModel().getValueAt(row, 0);
 
 // Deleta usando o DAO
-        clienteDAO.delete(id);
+clienteDAO.delete(id);
 
 // Recarrega a tabela
-        carregarTabelaClientes();
+carregarTabelaClientes();
+
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEnviar3ActionPerformed
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnEnviar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar4ActionPerformed
 
-        ClienteCadastro view = new ClienteCadastro();
+        ClienteCadastroView view = new ClienteCadastroView(this);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("CADASTRO");
@@ -259,6 +261,64 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviar4ActionPerformed
 
     private void btnEnviar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar5ActionPerformed
+
+        int row = tblClientes.getSelectedRow();
+
+        // Nenhuma linha selecionada → MOSTRA MENSAGEM e PARA AQUI
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione uma linha para atualizar!",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;  // OBRIGATÓRIO → impede continuar
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+
+        // Pega o ID do cliente
+        Integer id = (Integer) model.getValueAt(row, 0);
+
+        Cliente c = clienteDAO.findById(id);
+
+        if (c == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro: Cliente não encontrado!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // Atualiza os dados
+        c.setNome((String) model.getValueAt(row, 1));
+
+        try {
+            c.setData(sdf.parse((String) model.getValueAt(row, 2)));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Data inválida! Use dd/MM/yyyy.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        c.getTelefone().setNumero((String) model.getValueAt(row, 3));
+        c.getEndereco().setLogradouro((String) model.getValueAt(row, 4));
+        c.getEndereco().setCidade((String) model.getValueAt(row, 5));
+        c.getEndereco().setEstado((String) model.getValueAt(row, 6));
+
+        clienteDAO.save(c);
+
+        JOptionPane.showMessageDialog(this,
+                "Cliente atualizado com sucesso!",
+                "Sucesso",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        carregarTabelaClientes();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEnviar5ActionPerformed
 
@@ -297,7 +357,7 @@ public class ClienteView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEnviar3;
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnEnviar4;
     private javax.swing.JButton btnEnviar5;
     private javax.swing.JButton btnVoltar;

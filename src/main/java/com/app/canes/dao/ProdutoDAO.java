@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ProdutoDAO {
     
    
-    
+    private static ProdutoDAO instance;
        private final Map<Integer, Produto> map = new LinkedHashMap<>();
     private final AtomicLong seq = new AtomicLong(1);
 
@@ -26,6 +26,12 @@ public class ProdutoDAO {
         // Produtos baseados no Figma
         save(new Produto(null, 34580,  "Calça",12, 120.9));
         save(new Produto(null, 2457, "Vestido", 28, 102.0));
+    }
+     public static ProdutoDAO getInstance() {
+        if (instance == null) {
+            instance = new ProdutoDAO();
+        }
+        return instance;
     }
 
     public List<Produto> findAll() {

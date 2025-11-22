@@ -7,7 +7,6 @@ package com.app.canes.view;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -23,18 +22,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
 
-        System.out.println(getClass().getResource("/img/Vector.png"));
-
-        JPanel fundo = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon img = new ImageIcon(getClass().getResource("/img/fundo.png"));
-                g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-
-        setContentPane(fundo);  // depois aplica o fundo
+        carregarTela();
         
        
         initComponents();
@@ -45,8 +33,18 @@ public class Login extends javax.swing.JFrame {
     lblImagem.setBounds(20, 20, 315, 245); // posicione
     this.add(lblImagem);
 
-
-
+    }
+    
+     private void carregarTela() {
+        JPanel fundo = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon img = new ImageIcon(getClass().getResource("/img/fundo.png"));
+                g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        setContentPane(fundo);  // depois aplica o fundo
     }
 
     /**
@@ -154,6 +152,19 @@ public class Login extends javax.swing.JFrame {
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
 
+         
+            // Validação simples
+//            if (txtLogin.ise || txtSenha.isEmpty()) {
+//                JOptionPane.showMessageDialog(null, "Preencha login e senha!");
+//                return;
+//            }
+//
+//            // Login fixo (simula Figma)
+//            if (!txtLogin.equals("admin") || !txtSenha.equals("admin")) {
+//                JOptionPane.showMessageDialog(null, "Login inválido");
+//                return;
+//            }
+        
        Menu view = new Menu();
         view.setLocationRelativeTo(null);
         view.setVisible(true);
