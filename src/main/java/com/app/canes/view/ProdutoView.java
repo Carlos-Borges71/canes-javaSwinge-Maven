@@ -60,6 +60,7 @@ public class ProdutoView extends javax.swing.JFrame {
         
         PermissaoUtil.aplicarPermissoes(usuarioLogado,btnCadastrar, btnAtualizar, btnDeletar);
         txtUsuarioLogado.setText(usuarioLogado.getNome());
+        txtSetor.setText(usuarioLogado.getSetor());
     }
     ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 
@@ -126,6 +127,7 @@ public class ProdutoView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProdutos = new javax.swing.JTable();
         txtUsuarioLogado = new javax.swing.JLabel();
+        txtSetor = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -196,8 +198,12 @@ public class ProdutoView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblProdutos);
 
         txtUsuarioLogado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtUsuarioLogado.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsuarioLogado.setForeground(new java.awt.Color(255, 255, 255));
         txtUsuarioLogado.setText("1");
+
+        txtSetor.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtSetor.setForeground(new java.awt.Color(255, 255, 255));
+        txtSetor.setText("1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,8 +228,10 @@ public class ProdutoView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addGap(188, 188, 188)
-                                .addComponent(txtUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(159, 159, 159)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29))))
         );
@@ -236,7 +244,9 @@ public class ProdutoView extends javax.swing.JFrame {
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(txtUsuarioLogado)))
+                        .addComponent(txtUsuarioLogado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSetor)))
                 .addGap(65, 65, 65)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93)
@@ -414,6 +424,7 @@ public class ProdutoView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblProdutos;
+    private javax.swing.JLabel txtSetor;
     private javax.swing.JLabel txtUsuarioLogado;
     // End of variables declaration//GEN-END:variables
 }

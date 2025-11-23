@@ -57,6 +57,7 @@ public class UsuarioView extends javax.swing.JFrame {
         carregarTabelaUsuarios();
         
         PermissaoUtil.aplicarPermissoes(usuarioLogado,btnCadastrar, btnAtualizar, btnDeletar);
+       txtSetor.setText(usuarioLogado.getSetor());
        txtUsuarioLogado.setText(usuarioLogado.getNome());
     }
     
@@ -127,6 +128,7 @@ public class UsuarioView extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
+        txtSetor = new javax.swing.JLabel();
         txtUsuarioLogado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -197,8 +199,12 @@ public class UsuarioView extends javax.swing.JFrame {
         tblUsuarios.setRowHeight(25);
         jScrollPane1.setViewportView(tblUsuarios);
 
+        txtSetor.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtSetor.setForeground(new java.awt.Color(255, 255, 255));
+        txtSetor.setText("1");
+
         txtUsuarioLogado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtUsuarioLogado.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsuarioLogado.setForeground(new java.awt.Color(255, 255, 255));
         txtUsuarioLogado.setText("1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -222,20 +228,25 @@ public class UsuarioView extends javax.swing.JFrame {
                         .addGap(111, 111, 111))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(377, 377, 377))
+                        .addGap(155, 155, 155)
+                        .addComponent(txtSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(672, Short.MAX_VALUE)
+                    .addComponent(txtUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(19, 19, 19)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(txtUsuarioLogado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
+                .addGap(56, 56, 56)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(txtSetor))
                 .addGap(65, 65, 65)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93)
@@ -247,6 +258,11 @@ public class UsuarioView extends javax.swing.JFrame {
                     .addComponent(btnVoltar)
                     .addComponent(btnCadastrar))
                 .addGap(33, 33, 33))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(29, 29, 29)
+                    .addComponent(txtUsuarioLogado)
+                    .addContainerGap(604, Short.MAX_VALUE)))
         );
 
         pack();
@@ -390,6 +406,7 @@ public class UsuarioView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblUsuarios;
+    private javax.swing.JLabel txtSetor;
     private javax.swing.JLabel txtUsuarioLogado;
     // End of variables declaration//GEN-END:variables
 }

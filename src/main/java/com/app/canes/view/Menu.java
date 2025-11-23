@@ -56,6 +56,7 @@ public class Menu extends javax.swing.JFrame {
         JLabel lblImagem = new JLabel(icon);
 
         txtLogado.setText(usuarioLogado.getNome());
+        txtSetor.setText(usuarioLogado.getSetor());
 
         lblImagem.setBounds(20, 20, 315, 245); // posicione
         this.add(lblImagem);
@@ -78,6 +79,7 @@ public class Menu extends javax.swing.JFrame {
         btnCliente = new javax.swing.JButton();
         btnEnviar3 = new javax.swing.JButton();
         txtLogado = new javax.swing.JLabel();
+        txtSetor = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(918, 650));
@@ -135,8 +137,12 @@ public class Menu extends javax.swing.JFrame {
         });
 
         txtLogado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtLogado.setForeground(new java.awt.Color(153, 153, 153));
+        txtLogado.setForeground(new java.awt.Color(255, 255, 255));
         txtLogado.setText("jLabel1");
+
+        txtSetor.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtSetor.setForeground(new java.awt.Color(255, 255, 255));
+        txtSetor.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,7 +160,8 @@ public class Menu extends javax.swing.JFrame {
                                 .addComponent(txtLogado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addComponent(jLabel3)
-                                    .addGap(101, 101, 101)))
+                                    .addGap(101, 101, 101))
+                                .addComponent(txtSetor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEnviar3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEnviar1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,7 +173,9 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(txtLogado)
-                .addGap(60, 60, 60)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSetor)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,5 +265,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel txtLogado;
+    private javax.swing.JLabel txtSetor;
     // End of variables declaration//GEN-END:variables
 }

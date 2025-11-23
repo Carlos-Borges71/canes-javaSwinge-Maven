@@ -58,6 +58,7 @@ public class ClienteView extends javax.swing.JFrame {
         
         PermissaoUtil.aplicarPermissoes(usuarioLogado,btnCadastrar, btnAtualizar, btnDeletar);
         txtUsuarioLogado.setText(usuarioLogado.getNome());
+        txtSetor.setText(usuarioLogado.getSetor());
     }
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -128,8 +129,10 @@ public class ClienteView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
         txtUsuarioLogado = new javax.swing.JLabel();
+        txtSetor = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(33, 33, 33));
         setPreferredSize(new java.awt.Dimension(918, 650));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -198,8 +201,13 @@ public class ClienteView extends javax.swing.JFrame {
         tblClientes.setRowHeight(25);
         jScrollPane1.setViewportView(tblClientes);
 
-        txtUsuarioLogado.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsuarioLogado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtUsuarioLogado.setForeground(new java.awt.Color(255, 255, 255));
         txtUsuarioLogado.setText("1");
+
+        txtSetor.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtSetor.setForeground(new java.awt.Color(255, 255, 255));
+        txtSetor.setText("1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -221,10 +229,11 @@ public class ClienteView extends javax.swing.JFrame {
                         .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(111, 111, 111))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(377, 377, 377))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(106, 106, 106)
+                                .addComponent(txtSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29))))
@@ -234,13 +243,18 @@ public class ClienteView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(txtUsuarioLogado)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(txtSetor)))
                 .addGap(65, 65, 65)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDeletar)
                     .addComponent(btnAtualizar)
@@ -391,6 +405,7 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblClientes;
+    private javax.swing.JLabel txtSetor;
     private javax.swing.JLabel txtUsuarioLogado;
     // End of variables declaration//GEN-END:variables
 }
