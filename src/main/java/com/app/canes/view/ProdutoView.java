@@ -6,9 +6,14 @@ package com.app.canes.view;
 
 import com.app.canes.dao.ProdutoDAO;
 import com.app.canes.model.Produto;
+import com.app.canes.model.Usuario;
+import com.app.canes.util.ConfirmUtil;
+import com.app.canes.util.PermissaoUtil;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,7 +28,7 @@ import javax.swing.table.JTableHeader;
 public class ProdutoView extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProdutoView.class.getName());
-
+    private Usuario usuarioLogado;
     /**
      * Creates new form menu
      */
@@ -32,6 +37,18 @@ public class ProdutoView extends javax.swing.JFrame {
         carregarTela();
 
         initComponents();
+        
+        
+
+    }
+    public ProdutoView(Usuario usuarioLogado){
+        
+        this.usuarioLogado = usuarioLogado;
+        
+         carregarTela();
+
+        initComponents();
+        
         this.setLayout(null);
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/canes-.png"));
         JLabel lblImagem = new JLabel(icon);
@@ -40,7 +57,9 @@ public class ProdutoView extends javax.swing.JFrame {
         this.add(lblImagem);
 
         carregarTabelaProdutos();
-
+        
+        PermissaoUtil.aplicarPermissoes(usuarioLogado,btnCadastrar, btnAtualizar, btnDeletar);
+        txtUsuarioLogado.setText(usuarioLogado.getNome());
     }
     ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 
@@ -75,7 +94,7 @@ public class ProdutoView extends javax.swing.JFrame {
                 return true; // impede edição na tabela
             }
         };
-
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         tblProdutos.setModel(model);
 
         for (Produto p : produtoDAO.findAll()) {
@@ -83,7 +102,7 @@ public class ProdutoView extends javax.swing.JFrame {
                 p.getId(),
                 p.getCodigo(),
                 p.getNome(),
-                p.getValor(),
+                nf.format(p.getValor()),
                 p.getEstoque()
             });
         }
@@ -106,6 +125,7 @@ public class ProdutoView extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProdutos = new javax.swing.JTable();
+        txtUsuarioLogado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -175,6 +195,10 @@ public class ProdutoView extends javax.swing.JFrame {
         tblProdutos.setRowHeight(25);
         jScrollPane1.setViewportView(tblProdutos);
 
+        txtUsuarioLogado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtUsuarioLogado.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsuarioLogado.setText("1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,17 +219,24 @@ public class ProdutoView extends javax.swing.JFrame {
                         .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(111, 111, 111))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(377, 377, 377))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(188, 188, 188)
+                                .addComponent(txtUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(txtUsuarioLogado)))
                 .addGap(65, 65, 65)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93)
@@ -223,22 +254,26 @@ public class ProdutoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        
+        if (ConfirmUtil.confirmarExclusao(this)) {
+            int row = tblProdutos.getSelectedRow();
 
-        int row = tblProdutos.getSelectedRow();
-
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione um produto!");
-            return;
-        }
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione um produto!");
+                return;
+            }
 
 // O ID está na coluna 0 da tabela
-        Integer id = (Integer) tblProdutos.getModel().getValueAt(row, 0);
+            Integer id = (Integer) tblProdutos.getModel().getValueAt(row, 0);
 
 // Deleta usando o DAO
-        produtoDAO.delete(id);
+            produtoDAO.delete(id);
 
 // Recarrega a tabela
-        carregarTabelaProdutos();
+            carregarTabelaProdutos();
+
+            JOptionPane.showMessageDialog(null, "Registro excluído com sucesso!");
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeletarActionPerformed
@@ -298,7 +333,9 @@ public class ProdutoView extends javax.swing.JFrame {
 
         // ✔ Valor (double)
         try {
-            p.setValor(Double.parseDouble(model.getValueAt(row, 3).toString()));
+            String valor = model.getValueAt(row, 3).toString().replaceAll("[^0-9,]", "").replace(",", ".");
+
+            p.setValor(Double.parseDouble(valor));
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                     "Valor inválido! Use formato 99.99",
@@ -335,7 +372,7 @@ public class ProdutoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        Menu view = new Menu();
+        Menu view = new Menu(usuarioLogado);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("MENU");
@@ -377,5 +414,6 @@ public class ProdutoView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblProdutos;
+    private javax.swing.JLabel txtUsuarioLogado;
     // End of variables declaration//GEN-END:variables
 }

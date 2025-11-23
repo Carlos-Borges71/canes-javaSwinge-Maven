@@ -4,6 +4,8 @@
  */
 package com.app.canes.view;
 
+import com.app.canes.dao.UsuarioDAO;
+import com.app.canes.model.Usuario;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,6 +20,8 @@ public class Menu extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Menu.class.getName());
 
+    private Usuario usuarioLogado;
+
     /**
      * Creates new form menu
      */
@@ -26,15 +30,11 @@ public class Menu extends javax.swing.JFrame {
         carregarTela();
 
         initComponents();
-        this.setLayout(null);
-        ImageIcon icon = new ImageIcon(getClass().getResource("/img/Vector2.png"));
-        JLabel lblImagem = new JLabel(icon);
-
-        lblImagem.setBounds(20, 20, 315, 245); // posicione
-        this.add(lblImagem);
 
     }
-     private void carregarTela() {
+
+    //private UsuarioDAO dao;
+    private void carregarTela() {
         JPanel fundo = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -44,6 +44,22 @@ public class Menu extends javax.swing.JFrame {
             }
         };
         setContentPane(fundo);  // depois aplica o fundo
+    }
+
+    public Menu(Usuario usuarioLogado) {
+        carregarTela();
+
+        this.usuarioLogado = usuarioLogado;
+        initComponents();
+        this.setLayout(null);
+        ImageIcon icon = new ImageIcon(getClass().getResource("/img/Vector2.png"));
+        JLabel lblImagem = new JLabel(icon);
+
+        txtLogado.setText(usuarioLogado.getNome());
+
+        lblImagem.setBounds(20, 20, 315, 245); // posicione
+        this.add(lblImagem);
+
     }
 
     /**
@@ -61,6 +77,7 @@ public class Menu extends javax.swing.JFrame {
         btnEnviar1 = new javax.swing.JButton();
         btnCliente = new javax.swing.JButton();
         btnEnviar3 = new javax.swing.JButton();
+        txtLogado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(918, 650));
@@ -117,6 +134,10 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        txtLogado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtLogado.setForeground(new java.awt.Color(153, 153, 153));
+        txtLogado.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,10 +149,12 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(467, 467, 467))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(177, 177, 177))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtLogado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(101, 101, 101)))
                             .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEnviar3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEnviar1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,7 +164,9 @@ public class Menu extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(106, 106, 106)
+                .addGap(30, 30, 30)
+                .addComponent(txtLogado)
+                .addGap(60, 60, 60)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,7 +178,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(btnEnviar1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,7 +196,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnEnviar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar1ActionPerformed
 
-         ProdutoView view = new ProdutoView();
+        ProdutoView view = new ProdutoView(usuarioLogado);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("PRODUTO");
@@ -180,7 +205,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviar1ActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-         ClienteView view = new ClienteView();
+        ClienteView view = new ClienteView(usuarioLogado);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("CLIENTE");
@@ -189,7 +214,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnEnviar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar3ActionPerformed
-         UsuarioView view = new UsuarioView();
+        UsuarioView view = new UsuarioView(usuarioLogado);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("USUÁRIO");
@@ -230,5 +255,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton btnEnviar3;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel txtLogado;
     // End of variables declaration//GEN-END:variables
 }

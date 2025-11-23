@@ -17,6 +17,7 @@ com\app\canes\view\ClienteCadastroView$1.class
 com\app\canes\view\ClienteView.class
 com\app\canes\view\UsuarioCadastro$3.class
 com\app\canes\view\Menu$1.class
+com\app\canes\util\PermissaoUtil.class
 com\app\canes\view\ProdutoCadastro.class
 com\app\canes\view\UsuarioView$1.class
 com\app\canes\view\Menu$4.class
@@ -28,7 +29,6 @@ com\app\canes\view\UsuarioView$5.class
 com\app\canes\view\ClienteView$4.class
 com\app\canes\view\UsuarioCadastro$2.class
 com\app\canes\view\Login$3.class
-com\app\canes\model\Usuario.class
 com\app\canes\view\ProdutoView$6.class
 com\app\canes\Canes.class
 com\app\canes\view\Menu$3.class
@@ -47,6 +47,7 @@ com\app\canes\view\Login.class
 com\app\canes\view\ProdutoView$2.class
 com\app\canes\view\ProdutoCadastro$4.class
 com\app\canes\view\UsuarioView$6.class
+com\app\canes\util\ConfirmUtil.class
 com\app\canes\view\ProdutoView.class
 com\app\canes\dao\ClienteDAO.class
 com\app\canes\view\UsuarioCadastro$4.class

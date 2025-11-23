@@ -26,33 +26,28 @@ public class UsuarioCadastro extends javax.swing.JFrame {
     /**
      * Creates new form menu
      */
-    
-    
     public UsuarioCadastro() {
 
         carregarTela();
-        
+
         initComponents();
-       
-        
 
     }
     private UsuarioDAO usuarioDAO;
     private UsuarioView usuarioView;
-    
-    public UsuarioCadastro(UsuarioView usuarioView){
-        
+
+    public UsuarioCadastro(UsuarioView usuarioView) {
+
         carregarTela();
         carregarImg();
         initComponents();
-        
-        
+
         this.usuarioView = usuarioView;
         this.usuarioDAO = UsuarioDAO.getInstance();
-        
-     
+
     }
-     private void carregarTela() {
+
+    private void carregarTela() {
         JPanel fundo = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -63,16 +58,15 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         };
         setContentPane(fundo);  // depois aplica o fundo
     }
-     private void carregarImg(){
-         this.setLayout(null);
+
+    private void carregarImg() {
+        this.setLayout(null);
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/canes-.png"));
         JLabel lblImagem = new JLabel(icon);
 
         lblImagem.setBounds(20, 20, 206, 161); // posicione
         this.add(lblImagem);
-     }
-     
-     
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -296,16 +290,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addComponent(cmbSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -313,16 +298,27 @@ public class UsuarioCadastro extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
-                        .addComponent(jLabel7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(98, 98, 98)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addGroup(layout.createSequentialGroup()
@@ -347,11 +343,63 @@ public class UsuarioCadastro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar4ActionPerformed
-        
-         try {
+
+        try {
             // Validando entrada
             if (txtNome.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha o nome!");
+                txtNome.requestFocus();
+                return;
+            }
+            if (txtTelefone.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o telefone!");
+                txtTelefone.requestFocus();
+                return;
+            }
+            if (txtLogin.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o login!");
+                txtLogin.requestFocus();
+                return;
+            }
+            char[] senha = txtPassword.getPassword();
+            if (senha.length == 0) {
+                JOptionPane.showMessageDialog(this, "Preencha a senha!");
+                txtPassword.requestFocus();
+                return;
+            }
+            if (txtLogradouro.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o logradouro!");
+                txtLogradouro.requestFocus();
+                return;
+            }
+            if (txtNumero.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o numero!");
+                txtNumero.requestFocus();
+                return;
+            }
+            if (txtBairro.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o bairro!");
+                txtBairro.requestFocus();
+                return;
+            }
+            if (txtCidade.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha a cidade!");
+                txtCidade.requestFocus();
+                return;
+            }
+            if (txtEstado.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o estado!");
+                txtEstado.requestFocus();
+                return;
+            }
+            if (txtCep.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o cep!");
+                txtCep.requestFocus();
+                return;
+            }
+            if (cmbSetor.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this, "selecione um opção!");
+                cmbSetor.requestFocus();
                 return;
             }
 
@@ -374,16 +422,16 @@ public class UsuarioCadastro extends javax.swing.JFrame {
 
             // Data atual (ou formatada)
             Date dataCadastro = new Date();
-             
-    String senha = new String(txtPassword.getPassword());
+
+            String password = new String(txtPassword.getPassword());
             // Criar CLIENTE
             Usuario u = new Usuario(
                     null,
                     txtNome.getText(),
                     cmbSetor.getSelectedItem().toString(),
-                    txtLogin.getText(),                    
+                    txtLogin.getText(),
                     dataCadastro,
-                    senha,
+                    password,
                     telefone,
                     endereco
             );
@@ -404,8 +452,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEnviar4ActionPerformed
 
-    
-     private void limparCampos() {
+    private void limparCampos() {
         txtNome.setText("");
         txtLogin.setText("");
         txtPassword.setText("");
@@ -417,11 +464,11 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         txtCidade.setText("");
         txtCep.setText("");
         cmbSetor.setSelectedIndex(0);
-        
-     }
-    
+
+    }
+
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-      
+
         dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVoltarActionPerformed

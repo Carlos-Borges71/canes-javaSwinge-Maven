@@ -294,6 +294,42 @@ public class ClienteCadastroView extends javax.swing.JFrame {
             // Validando entrada
             if (txtNome.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha o nome!");
+                txtNome.requestFocus();
+                return;
+            }    
+            if (txtTelefone.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o telefone!");
+                txtTelefone.requestFocus();
+                return;
+           
+            }
+            if (txtLogradouro.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o logradouro!");
+                return;
+            }
+            if (txtNumero.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o numero!");
+                txtTelefone.requestFocus();
+                return;
+            }
+            if (txtBairro.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o bairro!");
+                txtBairro.requestFocus();                
+                return;
+            }
+            if (txtCidade.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha a cidade!");
+                txtCidade.requestFocus();
+                return;
+            }
+            if (txtEstado.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o estado!");
+                txtEstado.requestFocus();
+                return;
+            }
+            if (txtCep.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o cep!");
+                txtCep.requestFocus();
                 return;
             }
 
@@ -360,6 +396,7 @@ public class ClienteCadastroView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limparCampos();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLimparActionPerformed
 

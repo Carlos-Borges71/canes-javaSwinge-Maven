@@ -6,6 +6,8 @@ package com.app.canes.view;
 
 import com.app.canes.dao.UsuarioDAO;
 import com.app.canes.model.Usuario;
+import com.app.canes.util.ConfirmUtil;
+import com.app.canes.util.PermissaoUtil;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -22,7 +24,8 @@ import javax.swing.table.JTableHeader;
  * @author Carlos Borges
  */
 public class UsuarioView extends javax.swing.JFrame {
-
+    
+    private Usuario usuarioLogado;
     UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Usuario.class.getName());
@@ -34,8 +37,16 @@ public class UsuarioView extends javax.swing.JFrame {
 
         carregarTela();
 
-        initComponents();
+        initComponents();        
 
+      
+    }
+    public UsuarioView(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
+         carregarTela();
+
+        initComponents(); 
+        
         this.setLayout(null);
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/canes-.png"));
         JLabel lblImagem = new JLabel(icon);
@@ -44,8 +55,11 @@ public class UsuarioView extends javax.swing.JFrame {
         this.add(lblImagem);
 
         carregarTabelaUsuarios();
-
+        
+        PermissaoUtil.aplicarPermissoes(usuarioLogado,btnCadastrar, btnAtualizar, btnDeletar);
+       txtUsuarioLogado.setText(usuarioLogado.getNome());
     }
+    
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     private void carregarTela() {
@@ -107,12 +121,13 @@ public class UsuarioView extends javax.swing.JFrame {
 
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 1), new java.awt.Dimension(0, 1), new java.awt.Dimension(32767, 1));
         jLabel3 = new javax.swing.JLabel();
-        btnEnviar3 = new javax.swing.JButton();
-        btnEnviar4 = new javax.swing.JButton();
-        btnEnviar5 = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
+        btnCadastrar = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
+        txtUsuarioLogado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,39 +135,39 @@ public class UsuarioView extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Usuário");
 
-        btnEnviar3.setBackground(new java.awt.Color(224, 38, 38));
-        btnEnviar3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        btnEnviar3.setForeground(new java.awt.Color(255, 255, 255));
-        btnEnviar3.setText("Deletar");
-        btnEnviar3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEnviar3.setVerifyInputWhenFocusTarget(false);
-        btnEnviar3.addActionListener(new java.awt.event.ActionListener() {
+        btnDeletar.setBackground(new java.awt.Color(224, 38, 38));
+        btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        btnDeletar.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeletar.setText("Deletar");
+        btnDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDeletar.setVerifyInputWhenFocusTarget(false);
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviar3ActionPerformed(evt);
+                btnDeletarActionPerformed(evt);
             }
         });
 
-        btnEnviar4.setBackground(new java.awt.Color(50, 48, 48));
-        btnEnviar4.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        btnEnviar4.setForeground(new java.awt.Color(255, 255, 255));
-        btnEnviar4.setText("Cadastrar");
-        btnEnviar4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEnviar4.setVerifyInputWhenFocusTarget(false);
-        btnEnviar4.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastrar.setBackground(new java.awt.Color(50, 48, 48));
+        btnCadastrar.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        btnCadastrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCadastrar.setVerifyInputWhenFocusTarget(false);
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviar4ActionPerformed(evt);
+                btnCadastrarActionPerformed(evt);
             }
         });
 
-        btnEnviar5.setBackground(new java.awt.Color(50, 48, 48));
-        btnEnviar5.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        btnEnviar5.setForeground(new java.awt.Color(255, 255, 255));
-        btnEnviar5.setText("Atualizar");
-        btnEnviar5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEnviar5.setVerifyInputWhenFocusTarget(false);
-        btnEnviar5.addActionListener(new java.awt.event.ActionListener() {
+        btnAtualizar.setBackground(new java.awt.Color(50, 48, 48));
+        btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        btnAtualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAtualizar.setVerifyInputWhenFocusTarget(false);
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviar5ActionPerformed(evt);
+                btnAtualizarActionPerformed(evt);
             }
         });
 
@@ -182,6 +197,10 @@ public class UsuarioView extends javax.swing.JFrame {
         tblUsuarios.setRowHeight(25);
         jScrollPane1.setViewportView(tblUsuarios);
 
+        txtUsuarioLogado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtUsuarioLogado.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsuarioLogado.setText("1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,11 +212,11 @@ public class UsuarioView extends javax.swing.JFrame {
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(467, 467, 467))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnEnviar4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
-                        .addComponent(btnEnviar5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(btnEnviar3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(111, 111, 111))
@@ -205,60 +224,68 @@ public class UsuarioView extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(377, 377, 377))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(19, 19, 19)
+                .addComponent(txtUsuarioLogado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addGap(65, 65, 65)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(93, 93, 93)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEnviar3)
-                    .addComponent(btnEnviar5)
+                    .addComponent(btnDeletar)
+                    .addComponent(btnAtualizar)
                     .addComponent(btnVoltar)
-                    .addComponent(btnEnviar4))
+                    .addComponent(btnCadastrar))
                 .addGap(33, 33, 33))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEnviar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar3ActionPerformed
-        int row = tblUsuarios.getSelectedRow();
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        if (ConfirmUtil.confirmarExclusao(this)) {
 
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione um usuário!");
-            return;
-        }
+            int row = tblUsuarios.getSelectedRow();
+
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione um usuário!");
+                return;
+            }
 
 // O ID está na coluna 0 da tabela
-        Integer id = (Integer) tblUsuarios.getModel().getValueAt(row, 0);
+            Integer id = (Integer) tblUsuarios.getModel().getValueAt(row, 0);
 
 // Deleta usando o DAO
-        usuarioDAO.delete(id);
+            usuarioDAO.delete(id);
 
 // Recarrega a tabela
-        carregarTabelaUsuarios();
+            carregarTabelaUsuarios();
+            JOptionPane.showMessageDialog(null, "Registro excluído com sucesso!");
+        }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEnviar3ActionPerformed
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
-    private void btnEnviar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar4ActionPerformed
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
 
         UsuarioCadastro view = new UsuarioCadastro(this);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("CADASTRO");
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEnviar4ActionPerformed
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
-    private void btnEnviar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar5ActionPerformed
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
 
         int row = tblUsuarios.getSelectedRow();
 
@@ -318,10 +345,10 @@ public class UsuarioView extends javax.swing.JFrame {
         carregarTabelaUsuarios();
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEnviar5ActionPerformed
+    }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        Menu view = new Menu();
+        Menu view = new Menu(usuarioLogado);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
         view.setTitle("LOGIN");
@@ -355,13 +382,14 @@ public class UsuarioView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEnviar3;
-    private javax.swing.JButton btnEnviar4;
-    private javax.swing.JButton btnEnviar5;
+    private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblUsuarios;
+    private javax.swing.JLabel txtUsuarioLogado;
     // End of variables declaration//GEN-END:variables
 }

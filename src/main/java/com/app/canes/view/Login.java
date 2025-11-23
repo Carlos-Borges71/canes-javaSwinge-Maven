@@ -4,9 +4,12 @@
  */
 package com.app.canes.view;
 
+import com.app.canes.dao.UsuarioDAO;
+import com.app.canes.model.Usuario;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -17,25 +20,25 @@ public class Login extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
+    UsuarioDAO dao = UsuarioDAO.getInstance();
     /**
      * Creates new form menu
      */
     public Login() {
 
         carregarTela();
-        
-       
-        initComponents();
-        this.setLayout(null); 
-       ImageIcon icon = new ImageIcon(getClass().getResource("/img/Vector2.png"));
-    JLabel lblImagem = new JLabel(icon);
 
-    lblImagem.setBounds(20, 20, 315, 245); // posicione
-    this.add(lblImagem);
+        initComponents();
+        this.setLayout(null);
+        ImageIcon icon = new ImageIcon(getClass().getResource("/img/Vector2.png"));
+        JLabel lblImagem = new JLabel(icon);
+
+        lblImagem.setBounds(20, 20, 315, 245); // posicione
+        this.add(lblImagem);
 
     }
-    
-     private void carregarTela() {
+
+    private void carregarTela() {
         JPanel fundo = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -46,7 +49,7 @@ public class Login extends javax.swing.JFrame {
         };
         setContentPane(fundo);  // depois aplica o fundo
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,8 +155,28 @@ public class Login extends javax.swing.JFrame {
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
 
-         
-            // Validação simples
+        String login = txtLogin.getText();
+        String senha = new String(txtSenha.getPassword());
+
+        
+        Usuario usuarioLogado = dao.autenticar(login, senha);
+        
+        if (usuarioLogado != null) {
+            System.out.println(usuarioLogado.getNome());
+           
+            Menu view = new Menu(usuarioLogado);
+            view.setLocationRelativeTo(null);
+            view.setVisible(true);
+            view.setTitle("MENU");
+            dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Login ou senha inválidos");
+            txtLogin.requestFocus();
+            txtSenha.requestFocus();
+        }
+
+        // Validação simples
 //            if (txtLogin.ise || txtSenha.isEmpty()) {
 //                JOptionPane.showMessageDialog(null, "Preencha login e senha!");
 //                return;
@@ -164,12 +187,6 @@ public class Login extends javax.swing.JFrame {
 //                JOptionPane.showMessageDialog(null, "Login inválido");
 //                return;
 //            }
-        
-       Menu view = new Menu();
-        view.setLocationRelativeTo(null);
-        view.setVisible(true);
-        view.setTitle("MENU");
-        dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEnviarActionPerformed
 

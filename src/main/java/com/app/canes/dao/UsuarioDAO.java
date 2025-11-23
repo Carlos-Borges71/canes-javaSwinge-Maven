@@ -19,38 +19,47 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Carlos Borges
  */
 public class UsuarioDAO {
-    
+
     private static UsuarioDAO instance;
 
     private final Map<Integer, Usuario> map = new LinkedHashMap<>();
     private final AtomicLong seq = new AtomicLong(1);
 
-   
     public UsuarioDAO() {
-        
-        
+
         // Seed inicial baseado no seu Figma/PDF
-       save(new Usuario(
-        null,
-        "Administração",
-        "Carlos Borges",
-        "carlos",
-        new Date(),
-        "123456",
-        new Telefone(1, "99999-1111"),
-        new Endereco(1, "Rua das Flores", "123", "Centro", "São Paulo", "SP", "23000-000")));
+        save(new Usuario(
+                null,                
+                "Carlos Borges",
+                "VENDA",
+                "venda",
+                new Date(),
+                "1234",
+                new Telefone(1, "99999-1111"),
+                new Endereco(1, "Rua das Flores", "123", "Centro", "São Paulo", "SP", "23000-000")));
 
-
-       save(new Usuario(
-    null,
-    "Financeiro",
-    "Maria Silva",
-    "maria",
-    new Date(),
-    "abc123",
-    new Telefone(2, "98888-2222"),
-    new Endereco(2, "Av. Brasil", "456", "Copacabana", "Rio de Janeiro", "RJ", "22000-000")
-));
+        save(new Usuario(
+                null,
+                "Maria Silva",
+                "ADMINISTRATIVO",                
+                "admin",
+                new Date(),
+                "1234",
+                new Telefone(2, "98888-2222"),
+                new Endereco(2, "Av. Brasil", "456", "Copacabana", "Rio de Janeiro", "RJ", "22000-000")
+                
+                
+        ));
+        
+        save(new Usuario(
+                null,
+                "José da Silva",
+                "GERÊNCIA",                
+                "geren",
+                new Date(),
+                "1234",
+                new Telefone(3, "99999-1111"),
+                new Endereco(3, "Rua das Flores", "123", "Centro", "São Paulo", "SP", "23000-000")));
 
     }
 
@@ -60,7 +69,7 @@ public class UsuarioDAO {
         }
         return instance;
     }
-    
+
     public List<Usuario> findAll() {
         return new ArrayList<>(map.values());
     }
@@ -79,5 +88,15 @@ public class UsuarioDAO {
 
     public void delete(Integer id) {
         map.remove(id);
+    }
+
+    public Usuario autenticar(String login, String senha) {
+        for (Usuario u : map.values()) {
+
+            if ((u.getLogin().equalsIgnoreCase(login)) && u.getSenha().equals(senha)) {
+                return u;
+            }
+        }
+        return null;
     }
 }

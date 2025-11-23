@@ -7,6 +7,8 @@ package com.app.canes.view;
 import com.app.canes.dao.ProdutoDAO;
 import com.app.canes.model.Produto;
 import java.awt.Graphics;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,7 +30,9 @@ public class ProdutoCadastro extends javax.swing.JFrame {
         carregarTela();
 
         initComponents();
-
+        
+        
+        
     }
     private ProdutoView produtoView;  // referência para a tela de listagem
     private ProdutoDAO produtoDAO;
@@ -37,6 +41,7 @@ public class ProdutoCadastro extends javax.swing.JFrame {
 
         carregarTela();
         initComponents();
+      
 
         this.setLayout(null);
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/canes-.png"));
@@ -60,14 +65,16 @@ public class ProdutoCadastro extends javax.swing.JFrame {
         };
         setContentPane(fundo);  // depois aplica o fundo
     }
-    
-     private void limparCampos() {
+
+    private void limparCampos() {
         txtProduto.setText("");
         txtCodigo.setText("");
         txtQuant.setText("");
         txtValor.setText("");
     }
-
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,7 +142,7 @@ public class ProdutoCadastro extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Valor");
+        jLabel9.setText("Valor R$");
 
         btnLimpar.setBackground(new java.awt.Color(50, 48, 48));
         btnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
@@ -235,19 +242,37 @@ public class ProdutoCadastro extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
 
-         try {
+        try {
             // Validando entrada
             if (txtProduto.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha o produto!");
+                txtProduto.requestFocus();
                 return;
             }
+            if (txtCodigo.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o código do produto!");
+                txtCodigo.requestFocus();
+                return;
+            }
+            if (txtQuant.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha a quantidade");
+                txtQuant.requestFocus();
+                return;
+            }
+            
+            if (txtValor.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha o valor!");
+                txtValor.requestFocus();
+                return;
+            }
+            String valor = txtValor.getText().replaceAll("[R$ .]", "").replace(",", ".");
 
             Produto p = new Produto(
                     null,
                     Integer.parseInt(txtCodigo.getText()),
                     txtProduto.getText(),
                     Integer.parseInt(txtQuant.getText()),
-                    Double.parseDouble(txtValor.getText())
+                    Double.parseDouble(valor)
             );
 
             // Salvar no DAO
@@ -264,11 +289,10 @@ public class ProdutoCadastro extends javax.swing.JFrame {
 
         }
 
-       
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
-   
+
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
 
         dispose();
