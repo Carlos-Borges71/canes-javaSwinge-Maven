@@ -12,6 +12,7 @@ public class Telefone {
     private Integer id;
     private String numero;
     
+    
     public Telefone(){
         
     }
@@ -20,6 +21,7 @@ public class Telefone {
         this.id = id;
         this.numero = numero;
     }
+   
 
     public Integer getId() {
         return id;
@@ -37,26 +39,6 @@ public class Telefone {
         this.numero = numero;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Telefone other = (Telefone) obj;
-        return this.id == other.id;
-    }
+   
     
 }

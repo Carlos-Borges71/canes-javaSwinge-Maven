@@ -4,11 +4,10 @@
  */
 package com.app.canes.view;
 
+import com.app.canes.dao.ClienteProdutoDAO;
 import com.app.canes.dao.ProdutoDAO;
 import com.app.canes.model.Produto;
 import java.awt.Graphics;
-import java.text.NumberFormat;
-import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,29 +29,46 @@ public class ProdutoCadastro extends javax.swing.JFrame {
         carregarTela();
 
         initComponents();
-        
-        
-        
+
     }
-    private ProdutoView produtoView;  // referência para a tela de listagem
+    private ProdutoView produtoView;  
     private ProdutoDAO produtoDAO;
+    private int idClienteGerado;
+    private ClienteProdutoDAO dao;
 
     public ProdutoCadastro(ProdutoView produtoView) {
 
         carregarTela();
         initComponents();
-      
 
-        this.setLayout(null);
+       
+       
+        this.produtoView = produtoView;
+    this.produtoDAO = ProdutoDAO.getInstance();
+    this.dao = ClienteProdutoDAO.getInstance();
+    }
+    
+    
+
+public ProdutoCadastro(int idClienteGerado) {
+    
+    carregarTela();
+     this.setLayout(null);
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/canes-.png"));
         JLabel lblImagem = new JLabel(icon);
 
         lblImagem.setBounds(20, 20, 206, 161); // posicione
-        this.add(lblImagem);
+        this.add(lblImagem);        
+    
+    initComponents();
+    
+    this.idClienteGerado = idClienteGerado;
+    this.produtoDAO = ProdutoDAO.getInstance();
+    this.dao = ClienteProdutoDAO.getInstance();
+    
+    System.out.println(idClienteGerado);
+}
 
-        this.produtoView = produtoView;
-        this.produtoDAO = ProdutoDAO.getInstance();
-    }
 
     private void carregarTela() {
         JPanel fundo = new JPanel() {
@@ -72,9 +88,7 @@ public class ProdutoCadastro extends javax.swing.JFrame {
         txtQuant.setText("");
         txtValor.setText("");
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -259,7 +273,7 @@ public class ProdutoCadastro extends javax.swing.JFrame {
                 txtQuant.requestFocus();
                 return;
             }
-            
+
             if (txtValor.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha o valor!");
                 txtValor.requestFocus();
@@ -278,10 +292,15 @@ public class ProdutoCadastro extends javax.swing.JFrame {
             // Salvar no DAO
             produtoDAO.save(p);
 
-            JOptionPane.showMessageDialog(this, "Produto salvo com sucesso!");
+            
+           dao.addProdutoToCliente(idClienteGerado, p.getId());
+            
+           
 
-            produtoView.carregarTabelaProdutos();
+            JOptionPane.showMessageDialog(this, "Salvo com sucesso!");
 
+            //produtoView.carregarTabelaProdutos();
+            dispose();
             limparCampos();
 
         } catch (Exception e) {

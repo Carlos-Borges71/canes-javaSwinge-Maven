@@ -67,27 +67,6 @@ public class Produto {
         this.valor = valor;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Produto other = (Produto) obj;
-        return this.id == other.id;
-    }
     
 }
 

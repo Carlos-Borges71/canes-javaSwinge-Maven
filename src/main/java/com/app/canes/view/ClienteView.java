@@ -5,6 +5,7 @@
 package com.app.canes.view;
 
 import com.app.canes.dao.ClienteDAO;
+import com.app.canes.dao.ProdutoDAO;
 import com.app.canes.model.Cliente;
 import com.app.canes.model.Usuario;
 import com.app.canes.util.ConfirmUtil;
@@ -29,6 +30,7 @@ public class ClienteView extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ClienteView.class.getName());
 
     private Usuario usuarioCadastrado;
+
     /**
      * Creates new form menu
      */
@@ -41,7 +43,7 @@ public class ClienteView extends javax.swing.JFrame {
     }
 
     public ClienteView(Usuario usuarioLogado) {
-        
+
         this.usuarioCadastrado = usuarioLogado;
         carregarTela();
 
@@ -55,14 +57,15 @@ public class ClienteView extends javax.swing.JFrame {
         this.add(lblImagem);
 
         carregarTabelaClientes();
-        
-        PermissaoUtil.aplicarPermissoes(usuarioLogado,btnCadastrar, btnAtualizar, btnDeletar);
+
+        PermissaoUtil.aplicarPermissoes(usuarioLogado, btnCadastrar, btnAtualizar, btnDeletar);
         txtUsuarioLogado.setText(usuarioLogado.getNome());
         txtSetor.setText(usuarioLogado.getSetor());
     }
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     ClienteDAO clienteDAO = ClienteDAO.getInstance();
+    ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 
     private void carregarTela() {
         JPanel fundo = new JPanel() {
@@ -73,8 +76,8 @@ public class ClienteView extends javax.swing.JFrame {
                 g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        setContentPane(fundo);  // depois aplica o fundo
-    }
+        setContentPane(fundo);
+    }//
 
     public void carregarTabelaClientes() {
 
@@ -99,14 +102,24 @@ public class ClienteView extends javax.swing.JFrame {
         tblClientes.setModel(model);
 
         for (Cliente c : clienteDAO.findAll()) {
+
+//            Integer codigo = produtos.isEmpty() ? null : produtos.get(0).getCodigo();
+//            String produto = produtos.isEmpty() ? null : produtos.get(0).getNome();
+            String telefone = (c.getTelefone() != null) ? c.getTelefone().getNumero() : "—";
+            String logradouro = (c.getEndereco() != null) ? c.getEndereco().getLogradouro() : "—";
+            String cidade = (c.getEndereco() != null) ? c.getEndereco().getCidade() : "—";
+            String estado = (c.getEndereco() != null) ? c.getEndereco().getEstado() : "—";
+
             model.addRow(new Object[]{
                 c.getId(),
                 c.getNome(),
+                //                codigo,
+                //                produto,                
                 sdf.format(c.getData()),
-                c.getTelefone().getNumero(),
-                c.getEndereco().getLogradouro(),
-                c.getEndereco().getCidade(),
-                c.getEndereco().getEstado()
+                telefone,
+                logradouro,
+                cidade,
+                estado
             });
         }
     }
@@ -306,19 +319,17 @@ public class ClienteView extends javax.swing.JFrame {
 
         int row = tblClientes.getSelectedRow();
 
-        // Nenhuma linha selecionada → MOSTRA MENSAGEM e PARA AQUI
         if (row == -1) {
             JOptionPane.showMessageDialog(this,
                     "Selecione uma linha para atualizar!",
                     "Aviso",
                     JOptionPane.WARNING_MESSAGE
             );
-            return;  // OBRIGATÓRIO → impede continuar
+            return;
         }
 
         DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
 
-        // Pega o ID do cliente
         Integer id = (Integer) model.getValueAt(row, 0);
 
         Cliente c = clienteDAO.findById(id);
@@ -332,9 +343,13 @@ public class ClienteView extends javax.swing.JFrame {
             return;
         }
 
-        // Atualiza os dados
+        // Atualiza nome
+        c.setNome((String) model.getValueAt(row, 1));
+
+        // Atualiza data
         try {
-            c.setData(sdf.parse((String) model.getValueAt(row, 2)));
+            String dataStr = (String) model.getValueAt(row, 2);
+            c.setData(sdf.parse(dataStr));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Data inválida! Use dd/MM/yyyy.",
@@ -343,11 +358,27 @@ public class ClienteView extends javax.swing.JFrame {
             );
             return;
         }
-        c.setNome((String) model.getValueAt(row, 1));
-        c.getTelefone().setNumero((String) model.getValueAt(row, 3));
-        c.getEndereco().setLogradouro((String) model.getValueAt(row, 4));
-        c.getEndereco().setCidade((String) model.getValueAt(row, 5));
-        c.getEndereco().setEstado((String) model.getValueAt(row, 6));
+
+        // Telefone
+        if (c.getTelefone() != null && model.getColumnCount() > 3) {
+            c.getTelefone().setNumero((String) model.getValueAt(row, 3));
+        }
+
+        // Endereço
+        if (c.getEndereco() != null) {
+
+            if (model.getColumnCount() > 4) {
+                c.getEndereco().setLogradouro((String) model.getValueAt(row, 4));
+            }
+
+            if (model.getColumnCount() > 5) {
+                c.getEndereco().setCidade((String) model.getValueAt(row, 5));
+            }
+
+            if (model.getColumnCount() > 6) {
+                c.getEndereco().setEstado((String) model.getValueAt(row, 6));
+            }
+        }
 
         clienteDAO.save(c);
 

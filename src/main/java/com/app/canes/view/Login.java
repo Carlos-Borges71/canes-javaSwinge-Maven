@@ -47,7 +47,7 @@ public class Login extends javax.swing.JFrame {
                 g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        setContentPane(fundo);  // depois aplica o fundo
+        setContentPane(fundo); 
     }
     
     /**
@@ -162,7 +162,7 @@ public class Login extends javax.swing.JFrame {
         Usuario usuarioLogado = dao.autenticar(login, senha);
         
         if (usuarioLogado != null) {
-            System.out.println(usuarioLogado.getNome());
+            
            
             Menu view = new Menu(usuarioLogado);
             view.setLocationRelativeTo(null);

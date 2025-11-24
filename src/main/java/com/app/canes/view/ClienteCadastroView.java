@@ -23,18 +23,22 @@ public class ClienteCadastroView extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ClienteCadastroView.class.getName());
 
+    private Cliente cliente;
+
     /**
      * Creates new form menu
      */
     public ClienteCadastroView() {
+        
 
         carregarTela();
         initComponents();
     }
-    
+
     private ClienteView clienteView;  // referência para a tela de listagem
     private ClienteDAO clienteDAO;
 
+    
     public ClienteCadastroView(ClienteView clienteView) {
 
         carregarTela();
@@ -60,7 +64,7 @@ public class ClienteCadastroView extends javax.swing.JFrame {
                 g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        setContentPane(fundo);  // depois aplica o fundo
+        setContentPane(fundo);
     }
 
     /**
@@ -201,15 +205,10 @@ public class ClienteCadastroView extends javax.swing.JFrame {
                 .addGap(72, 72, 72)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtLogradouro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEstado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLimpar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,19 +288,18 @@ public class ClienteCadastroView extends javax.swing.JFrame {
 
     private void btnEnviar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviar4ActionPerformed
 
-        //ClienteDAO clienteDAO = new ClienteDAO();
         try {
             // Validando entrada
             if (txtNome.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha o nome!");
                 txtNome.requestFocus();
                 return;
-            }    
+            }
             if (txtTelefone.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha o telefone!");
                 txtTelefone.requestFocus();
                 return;
-           
+
             }
             if (txtLogradouro.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha o logradouro!");
@@ -314,7 +312,7 @@ public class ClienteCadastroView extends javax.swing.JFrame {
             }
             if (txtBairro.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha o bairro!");
-                txtBairro.requestFocus();                
+                txtBairro.requestFocus();
                 return;
             }
             if (txtCidade.getText().trim().isEmpty()) {
@@ -365,9 +363,15 @@ public class ClienteCadastroView extends javax.swing.JFrame {
             // Salvar no DAO
             clienteDAO.save(c);
 
-            JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!");
+            
+            
+            
+           
+           
+            ProdutoCadastro pv = new ProdutoCadastro(c.getId());
+            pv.setVisible(true);
 
-            clienteView.carregarTabelaClientes();
+            pv.setVisible(true);
 
             limparCampos();
 

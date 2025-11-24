@@ -10,7 +10,8 @@ import java.util.Date;
  *
  * @author Carlos Borges
  */
-public class Usuario {
+public class Usuario implements PessoaContato{
+    
     private Integer id;
     private String nome;
     private String setor;    
@@ -33,7 +34,8 @@ public class Usuario {
         this.telefone = telefone;
         this.endereco = endereco;
     }
-
+   
+    @Override
     public Integer getId() {
         return id;
     }
@@ -81,38 +83,14 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
+    @Override
     public Telefone getTelefone() {
         return telefone;
     }
-
+    @Override
     public Endereco getEndereco() {
         return endereco;
     }
     
-    
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Usuario other = (Usuario) obj;
-        return this.id == other.id;
-    }
-    
-    
+ 
 }

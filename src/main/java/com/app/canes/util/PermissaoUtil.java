@@ -39,7 +39,7 @@ public class PermissaoUtil {
                 break;
 
             default:
-                System.out.println("Setor desconhecido para permissões.");
+               
         }
     }
 }

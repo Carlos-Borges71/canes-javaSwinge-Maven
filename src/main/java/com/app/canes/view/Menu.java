@@ -4,12 +4,10 @@
  */
 package com.app.canes.view;
 
-import com.app.canes.dao.UsuarioDAO;
 import com.app.canes.model.Usuario;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -33,7 +31,7 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
-    //private UsuarioDAO dao;
+    
     private void carregarTela() {
         JPanel fundo = new JPanel() {
             @Override
@@ -43,7 +41,7 @@ public class Menu extends javax.swing.JFrame {
                 g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        setContentPane(fundo);  // depois aplica o fundo
+        setContentPane(fundo);
     }
 
     public Menu(Usuario usuarioLogado) {

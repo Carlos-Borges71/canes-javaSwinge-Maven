@@ -56,7 +56,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
                 g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        setContentPane(fundo);  // depois aplica o fundo
+        setContentPane(fundo);
     }
 
     private void carregarImg() {
@@ -64,7 +64,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/canes-.png"));
         JLabel lblImagem = new JLabel(icon);
 
-        lblImagem.setBounds(20, 20, 206, 161); // posicione
+        lblImagem.setBounds(20, 20, 206, 161); 
         this.add(lblImagem);
     }
 
@@ -197,7 +197,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("CEP");
 
-        cmbSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECIONE", "VENDAS", "ADMINISTRATIVO", "GERÊNCIA" }));
+        cmbSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECIONE", "VENDA", "ADMINISTRATIVO", "GERÊNCIA" }));
 
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

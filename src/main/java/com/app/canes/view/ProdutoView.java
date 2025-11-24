@@ -53,7 +53,7 @@ public class ProdutoView extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/canes-.png"));
         JLabel lblImagem = new JLabel(icon);
 
-        lblImagem.setBounds(20, 20, 206, 161); // posicione
+        lblImagem.setBounds(20, 20, 206, 161); 
         this.add(lblImagem);
 
         carregarTabelaProdutos();
@@ -73,7 +73,7 @@ public class ProdutoView extends javax.swing.JFrame {
                 g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        setContentPane(fundo);  // depois aplica o fundo
+        setContentPane(fundo);  
     }
 
     public void carregarTabelaProdutos() {

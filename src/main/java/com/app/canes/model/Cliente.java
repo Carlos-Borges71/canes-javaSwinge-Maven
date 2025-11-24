@@ -5,18 +5,19 @@
 package com.app.canes.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Carlos Borges
  */
-public class Cliente {
+public class Cliente implements PessoaContato{
     private Integer id;
     private String nome;
     private Date data;
     private Telefone telefone;
     private Endereco endereco;
-    
+    private List<Produto> produto;
     public Cliente(){
         
     }
@@ -29,6 +30,7 @@ public class Cliente {
         this.endereco = endereco;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
@@ -53,35 +55,33 @@ public class Cliente {
         this.data = data;
     }
 
-    public Telefone getTelefone() {
-        return telefone;
-    }
-
+   
+    @Override
     public Endereco getEndereco() {
         return endereco;
     }
 
-    
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + this.id;
-        return hash;
+    public Telefone getTelefone() {
+        return telefone;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Cliente other = (Cliente) obj;
-        return this.id == other.id;
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
     }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public List<Produto> getProduto() {
+        return produto;
+    }
+
+    public void setProduto(List<Produto> produto) {
+        this.produto = produto;
+    }
+    
+    
     
 }

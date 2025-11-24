@@ -1,9 +1,15 @@
 C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\Canes.java
 C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\dao\ClienteDAO.java
+C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\dao\ClienteProdutoDAO.java
+C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\dao\ConectaDAO.java
+C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\dao\EnderecoDAO.java
 C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\dao\ProdutoDAO.java
+C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\dao\TelefoneDAO.java
 C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\dao\UsuarioDAO.java
 C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\model\Cliente.java
+C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\model\ClienteProduto.java
 C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\model\Endereco.java
+C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\model\PessoaContato.java
 C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\model\Produto.java
 C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\model\Telefone.java
 C:\Users\Carlos Borges\Documents\NetBeansProjects\canes\src\main\java\com\app\canes\model\Usuario.java

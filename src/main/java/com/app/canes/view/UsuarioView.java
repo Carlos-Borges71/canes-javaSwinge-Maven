@@ -24,7 +24,7 @@ import javax.swing.table.JTableHeader;
  * @author Carlos Borges
  */
 public class UsuarioView extends javax.swing.JFrame {
-    
+
     private Usuario usuarioLogado;
     UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
 
@@ -37,30 +37,30 @@ public class UsuarioView extends javax.swing.JFrame {
 
         carregarTela();
 
-        initComponents();        
+        initComponents();
 
-      
     }
+
     public UsuarioView(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
-         carregarTela();
+        carregarTela();
 
-        initComponents(); 
-        
+        initComponents();
+
         this.setLayout(null);
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/canes-.png"));
         JLabel lblImagem = new JLabel(icon);
 
-        lblImagem.setBounds(20, 20, 206, 161); // posicione
+        lblImagem.setBounds(20, 20, 206, 161);
         this.add(lblImagem);
 
         carregarTabelaUsuarios();
-        
-        PermissaoUtil.aplicarPermissoes(usuarioLogado,btnCadastrar, btnAtualizar, btnDeletar);
-       txtSetor.setText(usuarioLogado.getSetor());
-       txtUsuarioLogado.setText(usuarioLogado.getNome());
+
+        PermissaoUtil.aplicarPermissoes(usuarioLogado, btnCadastrar, btnAtualizar, btnDeletar);
+        txtSetor.setText(usuarioLogado.getSetor());
+        txtUsuarioLogado.setText(usuarioLogado.getNome());
     }
-    
+
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     private void carregarTela() {
@@ -72,7 +72,7 @@ public class UsuarioView extends javax.swing.JFrame {
                 g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        setContentPane(fundo);  // depois aplica o fundo
+        setContentPane(fundo);
     }
 
     public void carregarTabelaUsuarios() {
@@ -91,7 +91,7 @@ public class UsuarioView extends javax.swing.JFrame {
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return true; // impede edição na tabela
+                return true;
             }
         };
 
@@ -324,7 +324,7 @@ public class UsuarioView extends javax.swing.JFrame {
 
         if (u == null) {
             JOptionPane.showMessageDialog(this,
-                    "Erro: Cliente não encontrado!",
+                    "Erro: Usuário não encontrado!",
                     "Erro",
                     JOptionPane.ERROR_MESSAGE
             );
