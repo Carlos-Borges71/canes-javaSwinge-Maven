@@ -29,6 +29,7 @@ public class ProdutoView extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProdutoView.class.getName());
     private Usuario usuarioLogado;
+
     /**
      * Creates new form menu
      */
@@ -37,28 +38,27 @@ public class ProdutoView extends javax.swing.JFrame {
         carregarTela();
 
         initComponents();
-        
-        
 
     }
-    public ProdutoView(Usuario usuarioLogado){
-        
+
+    public ProdutoView(Usuario usuarioLogado) {
+
         this.usuarioLogado = usuarioLogado;
-        
-         carregarTela();
+
+        carregarTela();
 
         initComponents();
-        
+
         this.setLayout(null);
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/canes-.png"));
         JLabel lblImagem = new JLabel(icon);
 
-        lblImagem.setBounds(20, 20, 206, 161); 
+        lblImagem.setBounds(20, 20, 206, 161);
         this.add(lblImagem);
 
         carregarTabelaProdutos();
-        
-        PermissaoUtil.aplicarPermissoes(usuarioLogado,btnCadastrar, btnAtualizar, btnDeletar);
+
+        PermissaoUtil.aplicarPermissoes(usuarioLogado, btnCadastrar, btnAtualizar, btnDeletar);
         txtUsuarioLogado.setText(usuarioLogado.getNome());
         txtSetor.setText(usuarioLogado.getSetor());
     }
@@ -73,7 +73,7 @@ public class ProdutoView extends javax.swing.JFrame {
                 g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        setContentPane(fundo);  
+        setContentPane(fundo);
     }
 
     public void carregarTabelaProdutos() {
@@ -264,14 +264,15 @@ public class ProdutoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        
-        if (ConfirmUtil.confirmarExclusao(this)) {
-            int row = tblProdutos.getSelectedRow();
 
-            if (row == -1) {
-                JOptionPane.showMessageDialog(this, "Selecione um produto!");
-                return;
-            }
+        int row = tblProdutos.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto!");
+            return;
+        }
+
+        if (ConfirmUtil.confirmarExclusao(this)) {
 
 // O ID está na coluna 0 da tabela
             Integer id = (Integer) tblProdutos.getModel().getValueAt(row, 0);

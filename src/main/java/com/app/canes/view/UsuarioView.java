@@ -98,15 +98,20 @@ public class UsuarioView extends javax.swing.JFrame {
         tblUsuarios.setModel(model);
 
         for (Usuario u : usuarioDAO.findAll()) {
+
+            String telefone = (u.getTelefone() != null) ? u.getTelefone().getNumero() : "—";
+            String logradouro = (u.getEndereco() != null) ? u.getEndereco().getLogradouro() : "—";
+            String cidade = (u.getEndereco() != null) ? u.getEndereco().getCidade() : "—";
+            String estado = (u.getEndereco() != null) ? u.getEndereco().getEstado() : "—";
             model.addRow(new Object[]{
                 u.getId(),
                 u.getNome(),
                 u.getSetor(),
                 sdf.format(u.getData()),
-                u.getTelefone().getNumero(),
-                u.getEndereco().getLogradouro(),
-                u.getEndereco().getCidade(),
-                u.getEndereco().getEstado()
+                telefone,
+                logradouro,
+                cidade,
+                estado
             });
         }
     }
@@ -269,14 +274,15 @@ public class UsuarioView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+
+        int row = tblUsuarios.getSelectedRow();
+        
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um usuário!");
+            return;
+        }
+
         if (ConfirmUtil.confirmarExclusao(this)) {
-
-            int row = tblUsuarios.getSelectedRow();
-
-            if (row == -1) {
-                JOptionPane.showMessageDialog(this, "Selecione um usuário!");
-                return;
-            }
 
 // O ID está na coluna 0 da tabela
             Integer id = (Integer) tblUsuarios.getModel().getValueAt(row, 0);

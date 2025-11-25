@@ -281,15 +281,17 @@ public class ClienteView extends javax.swing.JFrame {
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
 
-        if (ConfirmUtil.confirmarExclusao(this)) {
-
-        }
         int row = tblClientes.getSelectedRow();
 
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um cliente!");
             return;
         }
+        
+        if (ConfirmUtil.confirmarExclusao(this)) {
+
+        }
+        
 
 // O ID está na coluna 0 da tabela
         Integer id = (Integer) tblClientes.getModel().getValueAt(row, 0);
